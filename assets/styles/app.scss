@@ -1,0 +1,21 @@
+@import "bootstrap/scss/bootstrap";
+//@import "bootstrap-icons/font/bootstrap-icons.css";
+
+.bg-light {
+    background-color: #111622 !important;
+}
+
+.nav-link, .navbar-brand, h1 {
+    color:#E36204;
+}
+
+
+.navbar-expand-lg .navbar-collapse {
+    display: flex!important;
+    flex-basis: auto;
+    flex-direction: row-reverse;
+}
+
+body {
+    background-color: #111622;
+}
