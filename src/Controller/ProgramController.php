@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -31,8 +32,20 @@ class ProgramController extends AbstractController
             );
         }
 
-        return $this->render('program/program4.html.twig', [
+        return $this->render('program/show.html.twig', [
             'program' => $program,
             ]);
+    }
+
+    #[Route('/{programId}/seasons/{seasonId}', methods: ['GET'], name: 'season_show')]
+    public function showSeason(int $programId, int $seasonId, ProgramRepository $programRepository, SeasonRepository $seasonRepository): Response
+    {
+        $program = $programRepository->find($programId);
+        $season = $seasonRepository->find($seasonId);
+        $episodes = $season->getEpisodes(); 
+
+        return $this->render('program/season_show.html.twig', [
+            'programInfos' => $program, 'seasonInfos' => $season, 'episodeList' => $episodes
+            ]);  
     }
 }
