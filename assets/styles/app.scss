@@ -5,7 +5,7 @@
     background-color: #111622 !important;
 }
 
-.nav-link, .navbar-brand, h1, .h1, h2, .h2 {
+.nav-link, .navbar-brand, h1, .h1, h2, .h2 + h3 {
     color:#E36204 !important;
 }
 
@@ -15,6 +15,7 @@
     flex-direction: row-reverse;
 }
 
-body {
+body,p {
     background-color: #111622;
+    color: white !important;
 }
