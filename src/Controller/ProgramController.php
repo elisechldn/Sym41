@@ -39,12 +39,15 @@ class ProgramController extends AbstractController
         // Get data from HTTP request
         $form->handleRequest($request);
         // Was the form submitted ?
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Deal with the submitted data
             // For example : persiste & flush the entity
             $entityManager->persist($program);
             $entityManager->flush();            
     
+           // Once the form is submitted, valid and the data inserted in database, you can define the success flash message
+           $this->addFlash('success', 'Un nouveau programme a été ajouté');
+           
             // Redirect to categories list
             return $this->redirectToRoute('program_index');
         }
@@ -88,5 +91,16 @@ class ProgramController extends AbstractController
             'season' => $season,
             'episode' => $episode,
             ]);  
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
     }
 }

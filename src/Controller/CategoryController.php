@@ -42,6 +42,10 @@ class CategoryController extends AbstractController
             // For example : persiste & flush the entity
             $entityManager->persist($category);
             $entityManager->flush();
+
+            // Once the form is submitted, valid and the data inserted in database, you can define the success flash message
+            $this->addFlash('success', 'Une nouvelle catégorie a été ajoutée');
+            
             // And redirect to a route that display the result
             return $this->redirectToRoute('category_index');
         }

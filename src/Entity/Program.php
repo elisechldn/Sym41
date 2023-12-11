@@ -7,7 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+#[UniqueEntity('title', message: 'ce titre existe déjà')]
+#[Assert\EnableAutoMapping]
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
 class Program
 {
@@ -16,10 +21,13 @@ class Program
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Je dois être remplie')]
+    #[Assert\Regex(pattern: '/plus belle la vie/i', match: false, message: 'On parle de vraies séries ici')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Je dois posséder du contenu')]
     private ?string $synopsis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -119,4 +127,11 @@ class Program
 
         return $this;
     }
+
+//    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+//    {
+//        $metadata->addConstraint(new UniqueEntity([
+//            'fields' => 'title',
+//        ]));
+//    }
 }

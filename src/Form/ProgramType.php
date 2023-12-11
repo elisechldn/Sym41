@@ -5,10 +5,12 @@ namespace App\Form;
 use App\Entity\Program;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 class ProgramType extends AbstractType
 {
@@ -22,10 +24,13 @@ class ProgramType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Program::class,
-        ]);
-    }
+//    public function configureOptions(OptionsResolver $resolver): void
+//    {
+//        $resolver->setDefaults([
+//            'data_class' => Program::class,
+//            'constraints' => [
+//                new UniqueEntity(fields: ['title']),
+//            ],
+//        ]);
+//    }
 }
